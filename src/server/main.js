@@ -12,6 +12,8 @@ import swapiSchema from '../schema';
 
 const app = express();
 
+app.set('port', 8080);
+
 // Requests to /graphql redirect to /
 app.all('/graphql', (req, res) => res.redirect('/'));
 
@@ -21,7 +23,7 @@ app.use('/', graphqlHTTP(() => ({
 })));
 
 // Listen for incoming HTTP requests
-const listener = app.listen(() => {
+const listener = app.listen(app.get('port'), () => {
   let host = listener.address().address;
   if (host === '::') {
     host = 'localhost';
